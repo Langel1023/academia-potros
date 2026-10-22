@@ -1,0 +1,919 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Academia Potros</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --font-display:"Big Shoulders Display","Barlow Condensed","Arial Narrow",Impact,sans-serif;
+  --font-body:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  --bg:#F6F4EA;--paper:#FFFFFF;--ink:#111111;--ink-2:#57534A;--rule:#DEDACB;
+  --kit:#111111;--kit-ink:#FFC400;--kit-wash:#FFE680;--head:#111111;
+  --ok:#1D7745;--ok-wash:#D8EEDF;--ok-solid:#1D7745;
+  --warn:#6A4B00;--warn-wash:#FAE9A8;
+  --bad:#B5302A;--bad-wash:#F7D9D5;--bad-solid:#B5302A;
+  --shadow:0 10px 30px rgba(10,20,14,.22);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0D1511;--paper:#15211A;--ink:#E6EEE7;--ink-2:#9BB0A2;--rule:#26372C;
+    --kit:#FFC400;--kit-ink:#111111;--kit-wash:#3A3000;--head:#000000;
+    --ok:#62CF8F;--ok-wash:#163926;--ok-solid:#237A49;
+    --warn:#F2D777;--warn-wash:#3B3212;
+    --bad:#FF8A7E;--bad-wash:#431D1A;--bad-solid:#C0453C;
+    --shadow:0 10px 30px rgba(0,0,0,.5);color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0D1511;--paper:#15211A;--ink:#E6EEE7;--ink-2:#9BB0A2;--rule:#26372C;
+  --kit:#FFC400;--kit-ink:#111111;--kit-wash:#3A3000;--head:#000000;
+  --ok:#62CF8F;--ok-wash:#163926;--ok-solid:#237A49;
+  --warn:#F2D777;--warn-wash:#3B3212;
+  --bad:#FF8A7E;--bad-wash:#431D1A;--bad-solid:#C0453C;
+  --shadow:0 10px 30px rgba(0,0,0,.5);color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 var(--font-body);-webkit-text-size-adjust:100%}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+h1,h2,h3,p,ul{margin:0}
+h1,h2{font-family:var(--font-display);text-wrap:balance}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+:focus-visible{outline:3px solid var(--kit);outline-offset:2px}
+
+.app{height:100%;display:grid;grid-template-rows:auto minmax(0,1fr) auto;grid-template-areas:"top" "main" "nav"}
+.top{grid-area:top;background:var(--head);color:#FFC400;border-bottom:4px solid #FFC400}
+.top-in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;padding-block:10px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand svg{width:30px;height:30px;flex:none}
+.brand b{display:block;font:900 28px/1 var(--font-display);letter-spacing:.04em}
+.brand small{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;opacity:.8}
+.cats{display:flex;gap:6px;flex-wrap:wrap}
+.chipf{min-height:36px;padding:0 14px;border-radius:99px;border:1px solid rgba(255,196,0,.6);background:transparent;color:#FFC400;font-weight:600;font-size:14px}
+.chipf[aria-pressed="true"]{background:#FFC400;color:#111;border-color:#FFC400}
+.top :focus-visible{outline-color:#fff}
+.main{grid-area:main;overflow-y:auto;min-height:0;min-width:0}
+.view{max-width:1040px;margin:0 auto;padding-block:16px 32px;display:grid;gap:14px;align-content:start}
+.nav{grid-area:nav;display:flex;background:var(--paper);border-top:1px solid var(--rule)}
+.nav button{flex:1;min-width:0;min-height:58px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:0;background:transparent;color:var(--ink-2);font-size:12px;font-weight:600}
+.nav svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.nav button[aria-current="page"]{color:var(--kit)}
+@media (min-width:900px){
+  .app{grid-template-columns:216px minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);grid-template-areas:"top top" "nav main"}
+  .nav{flex-direction:column;justify-content:flex-start;gap:4px;border-top:0;border-right:1px solid var(--rule);padding:14px 10px}
+  .nav button{flex:none;flex-direction:row;justify-content:flex-start;gap:12px;min-height:50px;padding:0 14px;border-radius:99px;font-size:16px}
+  .nav button[aria-current="page"]{background:var(--kit-wash)}
+}
+
+.btn{min-height:44px;padding:0 16px;border-radius:9px;border:1px solid var(--rule);background:var(--paper);font-weight:600}
+.btn.pri{background:var(--kit);color:var(--kit-ink);border-color:transparent}
+.btn.ghost{background:transparent}
+.btn.danger{color:var(--bad)}
+.btn.sm{min-height:36px;padding:0 12px;font-size:14px}
+.btn.icon{min-width:44px;padding:0;font-size:22px;line-height:1}
+.btn[disabled]{opacity:.5;cursor:default}
+.chip{display:inline-flex;align-items:center;padding:2px 9px;border-radius:99px;font-size:12px;font-weight:700;letter-spacing:.03em;background:var(--kit-wash);color:var(--kit);white-space:nowrap}
+.chip.ok{background:var(--ok-wash);color:var(--ok)}
+.chip.warn{background:var(--warn-wash);color:var(--warn)}
+.chip.bad{background:var(--bad-wash);color:var(--bad)}
+.chip.mute{background:var(--bg);color:var(--ink-2);border:1px solid var(--rule)}
+.fld{display:grid;gap:6px;min-width:0}
+.fld>span{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.fld input,.fld select,.fld textarea{width:100%;min-height:46px;padding:0 12px;border:1px solid var(--rule);border-radius:8px;background:var(--bg);font-size:16px}
+.fld textarea{padding:10px 12px;resize:vertical;line-height:1.4}
+.bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 14px}
+.bar h1{font-size:34px;font-weight:900;line-height:1;letter-spacing:.02em;text-transform:uppercase}
+.acts{display:flex;flex-wrap:wrap;gap:8px}
+.datenav{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.semlab{padding:0 6px;font-weight:700;text-align:center}
+.score{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));background:var(--paper);border:1px solid var(--rule);border-radius:10px}
+.score>div{padding:10px 12px;display:grid;gap:2px;min-width:0}
+.score>div+div{border-left:1px solid var(--rule)}
+.score b{font:800 clamp(24px,6.2vw,38px)/1 var(--font-display);font-variant-numeric:tabular-nums;white-space:nowrap}
+.score b.ok{color:var(--ok)}
+.score b.bad{color:var(--bad)}
+.score span{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.meter{display:flex;height:8px;border-radius:99px;overflow:hidden;background:var(--rule)}
+.meter i{display:block;height:100%;background:var(--ok-solid)}
+.list{display:grid;gap:8px}
+.row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 12px;background:var(--paper);border:1px solid var(--rule);border-radius:10px;text-align:left;width:100%}
+button.row{min-height:64px}
+.num{width:42px;height:42px;display:grid;place-items:center;border-radius:8px;background:var(--kit-wash);color:var(--kit);font:800 24px/1 var(--font-display);font-variant-numeric:tabular-nums}
+.num.off{background:transparent;border:1px dashed var(--rule);color:var(--ink-2)}
+.row:has(>.who:first-child){grid-template-columns:minmax(0,1fr) auto}
+.who{display:grid;gap:1px;min-width:0}
+.nm{font-weight:600;font-size:17px;overflow-wrap:anywhere}
+.sub{font-size:13px;color:var(--ink-2)}
+.seg{display:inline-flex;border:1px solid var(--rule);border-radius:9px;overflow:hidden;background:var(--paper)}
+.seg.wide{display:flex}
+.seg button{flex:1;min-width:60px;min-height:46px;padding:0 10px;border:0;background:transparent;font-weight:600;font-size:15px}
+.seg button+button{border-left:1px solid var(--rule)}
+.seg .s[aria-pressed="true"]{background:var(--kit);color:var(--kit-ink)}
+.chk{min-width:115px;min-height:48px;padding:0 14px;border-radius:10px;border:1.5px solid var(--kit);background:transparent;color:var(--kit);font-weight:700;font-size:15px;transition:all 0.15s ease}
+.chk[aria-pressed="true"]{background:var(--ok-solid);border-color:var(--ok-solid);color:#fff}
+.chk[aria-pressed="true"]:hover{background:var(--bad-solid);border-color:var(--bad-solid)}
+.amt{display:grid;justify-items:end;line-height:1.05;text-align:right}
+.amt b{font:800 28px/1 var(--font-display);font-variant-numeric:tabular-nums}
+.amt small{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.amt.bad b{color:var(--bad)}
+.amt.ok b{color:var(--ok)}
+.amt.zero b{font:700 15px/1.2 var(--font-body)}
+.note{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 12px;padding:10px 14px;border-radius:10px;background:var(--warn-wash);color:var(--warn);font-size:14px;font-weight:500}
+.note.info{background:var(--kit-wash);color:var(--kit)}
+.empty{padding:28px 16px;text-align:center;color:var(--ink-2);display:grid;gap:10px;justify-items:center;border:1px dashed var(--rule);border-radius:10px}
+.empty h2{font-size:26px;color:var(--ink);font-weight:800}
+.cat{display:grid;gap:8px}
+.cat-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 10px;padding:14px 2px 6px;border-bottom:2px solid var(--kit);font:900 26px/1 var(--font-display);letter-spacing:.04em;text-transform:uppercase}
+.cat-h>span{white-space:nowrap}
+.cat-h small{margin-left:auto;font:600 13px/1.2 var(--font-body);letter-spacing:0;text-transform:none;color:var(--ink-2);text-align:right}
+@media (max-width:480px){.cat-h{font-size:22px}}
+.cat-h small.bad{color:var(--bad);font-weight:700}
+.search{position:relative}
+.search svg{position:absolute;left:14px;top:50%;width:20px;height:20px;transform:translateY(-50%);fill:none;stroke:var(--ink-2);stroke-width:2;stroke-linecap:round;pointer-events:none}
+.search input{width:100%;min-height:50px;padding:0 48px 0 44px;border:1px solid var(--rule);border-radius:12px;background:var(--paper);font-size:16px}
+.search input::-webkit-search-cancel-button{-webkit-appearance:none;appearance:none}
+.search .x{position:absolute;right:4px;top:50%;width:42px;height:42px;transform:translateY(-50%);border:0;background:transparent;color:var(--ink-2);font-size:26px;line-height:1}
+.cols{display:grid;gap:18px}
+@media (min-width:900px){.cols{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);align-items:start}}
+.day{font:800 20px/1.1 var(--font-display);letter-spacing:.04em;text-transform:uppercase;color:var(--ink-2);padding-top:6px}
+.day.hoy{color:var(--kit)}
+.hora{min-width:58px;font:800 28px/1 var(--font-display);font-variant-numeric:tabular-nums}
+.panel{display:grid;gap:12px;padding:14px;background:var(--paper);border:1px solid var(--rule);border-radius:12px}
+.panel h2{font-size:24px;font-weight:800;letter-spacing:.02em;text-transform:uppercase}
+.msg{width:100%;min-height:220px;padding:12px;border:1px solid var(--rule);border-radius:8px;background:var(--bg);font:15px/1.5 var(--font-body);resize:vertical}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+dialog{border:0;padding:0;border-radius:14px;width:min(520px,calc(100% - 24px));max-height:calc(100% - 24px);background:var(--paper);color:var(--ink);box-shadow:var(--shadow);overflow:auto}
+dialog::backdrop{background:rgba(8,14,10,.55)}
+.dlg{display:grid;gap:14px;padding:18px 18px 20px}
+.dh{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.dh h2{font-size:30px;font-weight:900;line-height:1.05;text-transform:uppercase}
+.balance{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:10px 14px;border-radius:10px;background:var(--bg);border:1px solid var(--rule)}
+.balance span{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.balance b{font:800 36px/1 var(--font-display);font-variant-numeric:tabular-nums}
+.balance.bad b{color:var(--bad)}
+.balance.ok b{color:var(--ok)}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.tile{display:grid;gap:3px;padding:8px 10px;border:1px solid var(--rule);border-radius:10px;background:var(--bg);min-width:0}
+.tile b{font:800 26px/1 var(--font-display);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.tile span{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.dact{display:flex;flex-wrap:wrap;gap:8px}
+.dlg h3{font:800 18px/1 var(--font-display);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.mvs,.wk{list-style:none;padding:0;margin:0;display:grid}
+.mvs li{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center;padding:6px 0;border-top:1px solid var(--rule);font-size:14px}
+.wk li{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 0;border-top:1px solid var(--rule);font-size:14px}
+.mv-n{color:var(--ink-2);font-size:13px;overflow-wrap:anywhere}
+.mvs b{font-variant-numeric:tabular-nums}
+.mvs b.pago{color:var(--ok)}
+.mvs b.cargo{color:var(--bad)}
+.linkbtn{border:0;background:transparent;color:var(--kit);font-weight:600;font-size:14px;min-height:36px;padding:0 4px}
+.err{color:var(--bad);font-weight:600;font-size:14px}
+@media (max-width:600px){
+  dialog{margin:auto 0 0;width:100%;max-width:none;border-radius:16px 16px 0 0}
+  .dlg{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-bottom:calc(20px + env(safe-area-inset-bottom,0px))}
+}
+.toast{position:fixed;left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));bottom:calc(74px + env(safe-area-inset-bottom,0px));z-index:50;width:fit-content;max-width:calc(100% - 32px);margin-inline:auto;display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:10px;background:var(--ink);color:var(--bg);box-shadow:var(--shadow);font-size:15px;font-weight:500}
+.toast .tbtn{border:0;background:transparent;color:inherit;font-weight:700;text-decoration:underline;min-height:36px;padding:0 4px}
+@media (min-width:900px){.toast{bottom:calc(20px + env(safe-area-inset-bottom,0px))}}
+</style>
+
+<div class="app" id="app">
+  <header class="top"><div class="top-in gut">
+    <div class="brand">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="11.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M16 4.5v23" stroke="currentColor" stroke-width="2.4"/><circle cx="16" cy="16" r="3" fill="currentColor"/></svg>
+      <div><b>POTROS</b><small>Academia formativa de fútbol</small></div>
+    </div>
+    <div class="cats" id="cats" role="group" aria-label="Filtrar por categoría" hidden></div>
+    <button class="chipf" id="who" data-act="salir" hidden></button>
+  </div></header>
+  <main class="main" id="main"><div class="view gut" id="view"></div></main>
+  <nav class="nav gut" aria-label="Secciones">
+    <button data-tab="asistencia"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.5"/></svg><span>Asistencia</span></button>
+    <button data-tab="pagos"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg><span>Pagos</span></button>
+    <button data-tab="historial"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.5-5.8"/><path d="M4 4.5v4h4M12 8v4.5l3 1.8"/></svg><span>Historial</span></button>
+    <button data-tab="juegos"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span>Juegos</span></button>
+    <button data-tab="jugadores"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8.5" r="3"/><path d="M3.5 19c.5-3.2 2.8-5 5.5-5s5 1.8 5.5 5"/><circle cx="17" cy="9.5" r="2.2"/><path d="M16.5 14.2c2.3.2 3.7 1.7 4 4.3"/></svg><span>Jugadores</span></button>
+  </nav>
+</div>
+<dialog id="dlg" aria-label="Formulario"></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden><span id="toastTxt"></span><button class="tbtn" id="toastBtn" type="button" hidden>Deshacer</button></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+<script>
+'use strict';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCeOUQgSmDkkbzN7jb7x6hJpRZ657OPZIU",
+  authDomain: "academia-potros.firebaseapp.com",
+  projectId: "academia-potros",
+  storageBucket: "academia-potros.firebasestorage.app",
+  messagingSenderId: "989949623284",
+  appId: "1:989949623284:web:f34d0c52bc410a41c497a1",
+  measurementId: "G-HDND5MGB78"
+};
+
+firebase.initializeApp(firebaseConfig);
+const firestoreDb = firebase.firestore();
+
+const CLUB='Potros';
+const USERS=[
+  {id:'rubi', email:'rubi.aguilarp@gmail.com', pass:'Potrosriberas', n:'Rubi Aguilar Perales', r:'Cuentas'},
+  {id:'langel', email:'langel101206@gmail.com', pass:'Potrosriberas', n:'Luis Angel', r:'Administrador'}
+];
+
+const TARIFA_DEF=120;
+const DIAS=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+const DIAS_C=['dom','lun','mar','mié','jue','vie','sáb'];
+const MESES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+const MESES_C=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+const pad=n=>String(n).padStart(2,'0');
+const iso=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const parse=s=>{const p=String(s).split('-').map(Number);return new Date(p[0],p[1]-1,p[2]);};
+const addDays=(s,n)=>{const d=parse(s);d.setDate(d.getDate()+n);return iso(d);};
+const hoy=()=>iso(new Date());
+const lunes=s=>addDays(s,-((parse(s).getDay()+6)%7));
+const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+const fLarga=s=>{const d=parse(s);return cap(DIAS[d.getDay()])+' '+d.getDate()+' de '+MESES[d.getMonth()];};
+const fCorta=s=>{const d=parse(s);return DIAS_C[d.getDay()]+' '+d.getDate()+' '+MESES_C[d.getMonth()];};
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=n=>'$'+(Math.round(n*100)/100).toLocaleString('es-MX',{minimumFractionDigits:0,maximumFractionDigits:2});
+const horaTxt=h=>{const m=/^(\d{1,2}):(\d{2})$/.exec(h||'');return m?(+m[1])+':'+m[2]:'';};
+const natural=(a,b)=>String(a).localeCompare(String(b),'es',{numeric:true});
+const norm=s=>String(s==null?'':s).normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+const cmpCat=(a,b)=>a===b?0:!a?1:!b?-1:natural(a,b);
+const catLabel=c=>c?'Categoría '+c:'Sin categoría';
+const plural=(n,u,p)=>n+' '+(n===1?u:p);
+
+function porCat(items,cat){
+  const m=new Map();
+  for(const x of items){const c=cat(x)||'';if(!m.has(c))m.set(c,[]);m.get(c).push(x);}
+  return[...m.entries()].sort((a,b)=>cmpCat(a[0],b[0]));
+}
+const $=(s,r)=>(r||document).querySelector(s);
+
+function rango(tipo,base){
+  const wd=parse(base).getDay();
+  if(tipo==='todo')return{desde:base,hasta:'9999-12-31'};
+  if(tipo==='finde'){
+    if(wd===0)return{desde:base,hasta:base};
+    if(wd===6)return{desde:base,hasta:addDays(base,1)};
+    const sab=addDays(base,6-wd);
+    return{desde:sab,hasta:addDays(sab,1)};
+  }
+  return{desde:base,hasta:addDays(base,6)};
+}
+function rangoTexto(tipo,desde,hasta){
+  if(tipo==='todo')return'Próximos juegos';
+  if(desde===hasta)return fLarga(desde);
+  const a=parse(desde),b=parse(hasta);
+  if(a.getMonth()===b.getMonth())return'Del '+a.getDate()+' al '+b.getDate()+' de '+MESES[b.getMonth()];
+  return'Del '+a.getDate()+' de '+MESES[a.getMonth()]+' al '+b.getDate()+' de '+MESES[b.getMonth()];
+}
+const semanaTxt=l=>rangoTexto('semana',l,addDays(l,6));
+function buildRol(o){
+  const r=rango(o.tipo,o.base);
+  const list=o.partidos.filter(p=>p.fecha>=r.desde&&p.fecha<=r.hasta&&(!o.cat||p.categoria===o.cat))
+    .sort((a,b)=>(a.fecha+(a.hora||'')).localeCompare(b.fecha+(b.hora||'')));
+  if(!list.length)return'';
+  const out=['⚽ *Rol de juegos · '+o.club+'*','_'+rangoTexto(o.tipo,r.desde,r.hasta)+'_'];
+  const cats=[...new Set(list.map(p=>p.categoria||''))].sort(cmpCat);
+  for(const c of cats){
+    out.push('','*'+catLabel(c)+'*');
+    for(const p of list.filter(x=>(x.categoria||'')===c)){
+      const h=horaTxt(p.hora);
+      out.push('• '+[cap(fCorta(p.fecha)),h?h+' hrs':'',p.rival?'vs '+p.rival:'',p.sede||''].filter(Boolean).join(' · '));
+    }
+  }
+  if(o.nota&&o.nota.trim())out.push('',o.nota.trim());
+  return out.join('\n');
+}
+
+const S={tab:'asistencia',cat:'',q:'',semana:lunes(hoy()),bajas:false,filtro:'deben',rango:'semana',pasados:false,db:null,conn:'pending',ready:new Set(),canWrite:true,err:'',confirm:'',user:'',hd:'',hh:''};
+const D={jug:[],asis:new Map(),movs:[],part:[],cfg:{}};
+try{
+  S.cat=localStorage.getItem('potros.cat')||'';
+  const t=localStorage.getItem('potros.tab');
+  if(t&&/^(asistencia|pagos|historial|juegos|jugadores)$/.test(t))S.tab=t;
+  const savedUser=localStorage.getItem('potros.user');
+  if(savedUser) S.user = savedUser;
+}catch(e){}
+const guardarPref=()=>{try{localStorage.setItem('potros.cat',S.cat);localStorage.setItem('potros.tab',S.tab);if(S.user)localStorage.setItem('potros.user',S.user);else localStorage.removeItem('potros.user');}catch(e){}};
+
+const semanaActual=()=>lunes(hoy());
+const tarifa=()=>{const t=+D.cfg.tarifa;return t>0?t:TARIFA_DEF;};
+const semMapa=id=>((D.asis.get(id)||{}).semanas)||{};
+const montoSem=(id,sem)=>+semMapa(id)[sem]||0;
+const semanasDe=id=>{const m=semMapa(id);return Object.keys(m).filter(k=>+m[k]>0).sort().reverse().map(k=>[k,+m[k]]);};
+
+const cmpJ=(a,b)=>cmpCat(a.categoria||'',b.categoria||'')||natural(a.nombre||'',b.nombre||'');
+const enCat=x=>!S.cat||x.categoria===S.cat;
+const coincide=j=>{
+  const q=norm(S.q).split(/\s+/).filter(Boolean);
+  if(!q.length)return true;
+  const hay=norm([j.nombre,j.tutor,j.categoria].join(' '));
+  return q.every(t=>hay.includes(t));
+};
+const activos=()=>D.jug.filter(j=>j.activo!==false&&enCat(j)).sort(cmpJ);
+const categorias=()=>{const s=new Set();D.jug.forEach(j=>{if(j.activo!==false&&j.categoria)s.add(j.categoria);});D.part.forEach(p=>{if(p.categoria)s.add(p.categoria);});return[...s].sort(natural);};
+
+function cuentas(){
+  const m=new Map();
+  const g=id=>{let c=m.get(id);if(!c){c={cobrado:0,pagado:0,asis:0,saldo:0};m.set(id,c);}return c;};
+  D.asis.forEach((d,id)=>{const s=(d&&d.semanas)||{};for(const k in s){const v=+s[k];if(v>0){const c=g(id);c.cobrado+=v;c.asis++;}}});
+  for(const x of D.movs){const c=g(x.jugadorId),v=+x.monto||0;if(x.tipo==='pago')c.pagado+=v;else c.cobrado+=v;}
+  m.forEach(c=>{c.saldo=Math.round((c.cobrado-c.pagado)*100)/100;});
+  return m;
+}
+const cuentaDe=(m,id)=>m.get(id)||{cobrado:0,pagado:0,asis:0,saldo:0};
+function racha(id){
+  const act=semanaActual(),j=D.jug.find(x=>x.id===id),marc=semanasDe(id).map(x=>x[0]).sort();
+  const desde=[j&&j.alta?lunes(j.alta):'',marc[0]||''].filter(Boolean).sort()[0];
+  const n=desde?Math.max(1,Math.min(8,Math.round((parse(act)-parse(desde))/6048e5)+1)):8;
+  let v=0;for(let i=0;i<n;i++)if(montoSem(id,addDays(act,-7*i))>0)v++;
+  return{v,n};
+}
+const hayEj=()=>D.jug.some(x=>x.ejemplo)||D.part.some(x=>x.ejemplo)||D.movs.some(x=>x.ejemplo)||[...D.asis.values()].some(d=>d&&d.ejemplo);
+const dorsalTile=()=>'';
+const fromSnap=s=>s.docs.map(d=>Object.assign({id:d.id},d.data()));
+
+function secciones(items,cat,fila,extra){
+  return porCat(items,cat).map(([c,arr])=>'<section class="cat" aria-label="'+esc(catLabel(c))+'"><h2 class="cat-h"><span>'+esc(catLabel(c))+'</span>'
+    +(extra?extra(arr):'<small>'+arr.length+(arr.length===1?' jugador':' jugadores')+'</small>')+'</h2><div class="list">'+arr.map(fila).join('')+'</div></section>').join('');
+}
+
+let tT=0,tUndo=null;
+function toast(msg,undoFn){
+  $('#toastTxt').textContent=msg;tUndo=undoFn||null;
+  $('#toastBtn').hidden=!undoFn;$('#toast').hidden=false;
+  clearTimeout(tT);tT=setTimeout(()=>{$('#toast').hidden=true;tUndo=null;},undoFn?7000:3500);
+}
+$('#toastBtn').addEventListener('click',()=>{const f=tUndo;tUndo=null;$('#toast').hidden=true;if(f)f();});
+
+async function escribir(fn){
+  if(!S.canWrite){toast('Tu acceso es de solo lectura.');return false;}
+  try{await fn();return true;}
+  catch(e){
+    const c=e&&e.code;
+    if(c==='permission-denied'||c==='not-found'){S.canWrite=false;draw();toast('No tienes permiso para guardar cambios.');}
+    else if(c==='resource-exhausted')toast('Demasiadas acciones seguidas. Espera un momento.');
+    else toast('No se pudo guardar. Intenta de nuevo.');
+    return false;
+  }
+}
+
+async function guardarCfg(p){
+  const r=S.db.doc('config/club');
+  try{await r.update(p);}
+  catch(e){if(e&&(e.code==='not-found'||e.code==='invalid_argument'))await r.set(Object.assign({},D.cfg,p));else throw e;}
+}
+function abrir(html){
+  const d=$('#dlg');d.innerHTML=html;
+  if(!d.open){if(d.showModal)d.showModal();else d.setAttribute('open','');}
+  const f=d.querySelector('input[type=text],input[type=number],input[type=tel],textarea');
+  if(f)setTimeout(()=>f.focus(),40);
+}
+function cerrar(){const d=$('#dlg');if(d.open){if(d.close)d.close();else d.removeAttribute('open');}}
+$('#dlg').addEventListener('click',e=>{if(e.target===$('#dlg'))cerrar();});
+const dError=m=>{const p=$('#dErr');if(p){p.textContent=m;p.hidden=false;}};
+
+const catOptions=()=>{
+  const y=new Date().getFullYear(),base=[];
+  for(let a=y-4;a>=y-17;a--)base.push(String(a));
+  const all=[...new Set(base.concat(categorias()))].sort(natural);
+  return'<datalist id="catList">'+all.map(c=>'<option value="'+esc(c)+'">').join('')+'</datalist>';
+};
+
+const acts={},dacts={};
+let pending=false;
+const LISTAS=()=>({asistencia:lAsis,pagos:lPagos,historial:lHist,jugadores:lJug});
+const lista=()=>{const f=LISTAS()[S.tab];return f?f():'';};
+function refrescarLista(){const el=$('#lista');if(el)el.innerHTML=lista();}
+
+function plan(){
+  const ae=document.activeElement,v=$('#view');
+  if(ae&&v&&v.contains(ae)){
+    if(ae.id==='q'){pending=true;refrescarLista();return;}
+    if(/^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName)){pending=true;return;}
+  }
+  draw();
+}
+function drawCats(){
+  const el=$('#cats'),cs=S.db&&S.ready.size>=4?categorias():[];
+  if(S.cat&&!cs.includes(S.cat)&&cs.length){S.cat='';guardarPref();}
+  el.hidden=cs.length<2;
+  if(el.hidden)return;
+  el.innerHTML=['']
+    .concat(cs).map(c=>'<button class="chipf" data-act="cat" data-v="'+esc(c)+'" aria-pressed="'+(S.cat===c)+'">'+(c?esc(c):'Todas')+'</button>').join('');
+}
+function aviso(titulo,texto){return'<div class="empty"><h2>'+esc(titulo)+'</h2><p>'+esc(texto)+'</p></div>';}
+const buscador=()=>'<div class="search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>'
+  +'<input id="q" type="search" value="'+esc(S.q)+'" placeholder="Buscar jugador…" aria-label="Buscar jugador" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search">'
+  +'<button type="button" class="x" id="qx" data-act="qClear" aria-label="Borrar búsqueda"'+(S.q?'':' hidden')+'>×</button></div>';
+const sinResultados=()=>'<div class="empty"><h2>Sin resultados</h2><p>No encontré jugadores que coincidan con “'+esc(S.q.trim())+'”.</p><button class="btn" data-act="qClear">Borrar búsqueda</button></div>';
+function banners(){
+  let h='';
+  if(!S.canWrite)h+='<p class="note">Tienes acceso de solo lectura: puedes ver la información, pero no guardar cambios.</p>';
+  if(hayEj())h+='<div class="note"><span>Estás viendo datos de ejemplo para que pruebes la página.</span><button class="btn sm" data-act="ejBorrar">'+(S.confirm==='ej'?'¿Seguro? Toca otra vez':'Borrar ejemplos')+'</button></div>';
+  return h;
+}
+function draw(){
+  pending=false;
+  const lg=!S.user;$('.nav').hidden=lg;$('#who').hidden=lg;
+  if(!lg){const u=USERS.find(x=>x.id===S.user);$('#who').textContent=(u?u.n.split(' ')[0]:'')+' · Salir';}
+  if(lg){$('#cats').hidden=true;if(!$('#lg'))$('#view').innerHTML=loginHtml();return;}
+  document.querySelectorAll('.nav button').forEach(b=>b.setAttribute('aria-current',b.dataset.tab===S.tab?'page':'false'));
+  drawCats();
+  const v=$('#view');
+  if(S.conn==='pending'){v.innerHTML=aviso('Conectando','Conectando con la base de datos…');return;}
+  if(!S.db){v.innerHTML=aviso('Falta iniciar sesión','Inicia sesión para cargar y editar información.');return;}
+  if(S.err){v.innerHTML=aviso('No se pudieron cargar los datos','Revisa tu conexión y vuelve a cargar.');return;}
+  if(S.ready.size<4){v.innerHTML=aviso('Cargando','Trayendo jugadores, asistencia y pagos…');return;}
+  const f={asistencia:vAsis,pagos:vPagos,historial:vHist,juegos:vJuegos,jugadores:vJug}[S.tab]||vAsis;
+  v.innerHTML=banners()+f();
+}
+document.addEventListener('click',e=>{
+  const t=e.target.closest('[data-tab],[data-act],[data-dact]');
+  if(!t)return;
+  if(t.dataset.tab){S.tab=t.dataset.tab;S.confirm='';guardarPref();draw();$('#main').scrollTop=0;return;}
+  if(t.dataset.dact){const f=dacts[t.dataset.dact];if(f)f(t);return;}
+  const f=acts[t.dataset.act];if(f)f(t);
+});
+document.addEventListener('submit',e=>{e.preventDefault();const k=e.target.dataset.kind,f=dacts['enviar_'+k];if(f)f(e.target);});
+document.addEventListener('change',e=>{
+  if(e.target.id==='nota'&&acts.notaGuardar)acts.notaGuardar(e.target);
+  if(e.target.id==='hDesde'||e.target.id==='hHasta'){S.hd=$('#hDesde').value;S.hh=$('#hHasta').value;draw();}
+});
+document.addEventListener('input',e=>{
+  if(e.target.id!=='q')return;
+  S.q=e.target.value;
+  const x=$('#qx');if(x)x.hidden=!S.q;
+  refrescarLista();
+});
+document.addEventListener('focusout',()=>{if(pending)setTimeout(plan,500);});
+acts.cat=t=>{S.cat=t.dataset.v;guardarPref();draw();};
+acts.qClear=()=>{S.q='';const i=$('#q');if(i){i.value='';i.focus();}const x=$('#qx');if(x)x.hidden=true;refrescarLista();};
+dacts.cerrar=()=>cerrar();
+
+let unsubList=[];
+function suscribir(){
+  unsubList.forEach(u=>u());unsubList=[];
+  const c=n=>S.db.collection(n);
+  const fail=e=>{S.err=(e&&e.code)||'unavailable';draw();};
+  const listo=n=>{S.ready.add(n);plan();};
+  unsubList.push(c('jugadores').onSnapshot(s=>{D.jug=fromSnap(s);listo('j');},fail));
+  unsubList.push(c('asistencia').onSnapshot(s=>{D.asis=new Map(s.docs.map(d=>[d.id,d.data()]));listo('a');},fail));
+  unsubList.push(c('movimientos').onSnapshot(s=>{D.movs=fromSnap(s);listo('m');},fail));
+  unsubList.push(c('partidos').onSnapshot(s=>{D.part=fromSnap(s);listo('p');},fail));
+  unsubList.push(S.db.doc('config/club').onSnapshot(s=>{D.cfg=s.exists?s.data():{};plan();},()=>{}));
+}
+
+function vAsis(){
+  const lista=activos(),sem=S.semana,esAct=sem===semanaActual(),tf=tarifa();
+  let h='<div class="bar"><div><h1>Asistencia</h1><p class="sub">Se cobra la semana completa aunque solo vengan un día.</p></div><div class="datenav">'
+    +'<button class="btn icon" data-act="sem" data-v="-1" aria-label="Semana anterior">‹</button>'
+    +'<span class="semlab">'+esc(semanaTxt(sem))+'</span>'
+    +'<button class="btn icon" data-act="sem" data-v="1" aria-label="Semana siguiente"'+(esAct?' disabled':'')+'>›</button>'
+    +(esAct?'':'<button class="btn sm" data-act="sem" data-v="hoy">Esta semana</button>')+'</div></div>';
+  if(!lista.length)return h+'<div class="empty"><h2>Todavía no hay jugadores'+(S.cat?' en la categoría '+esc(S.cat):'')+'</h2><p>Agrega a tu primer jugador para empezar a pasar lista.</p><button class="btn pri" data-act="jugNuevo">Agregar jugador</button></div>';
+  let v=0,suma=0;
+  lista.forEach(j=>{const m=montoSem(j.id,sem);if(m>0){v++;suma+=m;}});
+  return h+'<div class="note info"><span>Cuota por semana: <b>'+money(tf)+'</b>. Al marcar que vino, se suma a su deuda en Pagos.</span><button class="btn sm" data-act="cuota">Cambiar cuota</button></div>'
+    +'<div class="score" role="group" aria-label="Resumen de la semana"><div><b class="ok">'+v+'</b><span>Vinieron</span></div><div><b>'+(lista.length-v)+'</b><span>Sin marcar</span></div><div><b>'+money(suma)+'</b><span>Cuotas de la semana</span></div></div>'
+    +'<div class="meter" aria-hidden="true"><i style="width:'+(v*100/lista.length)+'%"></i></div>'
+    +buscador()+'<div id="lista">'+lAsis()+'</div>';
+}
+function lAsis(){
+  const sem=S.semana,filas=activos().filter(coincide);
+  if(!filas.length)return S.q.trim()?sinResultados():'';
+  return secciones(filas,j=>j.categoria,j=>{
+    const m=montoSem(j.id,sem),on=m>0,r=racha(j.id);
+    return'<div class="row">'+dorsalTile(j)+'<div class="who"><span class="nm">'+esc(j.nombre)+'</span><span class="sub">'
+      +(on?'Vino · +'+money(m)+' a su deuda':'Vino '+r.v+' de las últimas '+r.n+(r.n===1?' semana':' semanas'))+'</span></div>'
+      +'<button class="chk" data-act="asis" data-id="'+esc(j.id)+'" aria-pressed="'+on+'" aria-label="Asistencia de '+esc(j.nombre)+' en esta semana">'+(on?'✓ Vino (Quitar)':'Marcar')+'</button></div>';
+  },arr=>'<small>Vinieron '+arr.filter(j=>montoSem(j.id,sem)>0).length+' de '+arr.length+'</small>');
+}
+
+async function marcar(id,sem,monto){
+  const ref=S.db.doc('asistencia/'+id);
+  try{
+    if (monto == null || monto === 0) {
+      await ref.set({ semanas: { [sem]: firebase.firestore.FieldValue.delete() } }, { merge: true });
+    } else {
+      await ref.set({ semanas: { [sem]: monto } }, { merge: true });
+    }
+  } catch(e){
+    throw e;
+  }
+}
+const busy=new Set();
+acts.asis=async t=>{
+  const id=t.dataset.id,sem=S.semana;
+  if(sem>semanaActual()||busy.has(id))return;
+  busy.add(id);
+  try{
+    const on=montoSem(id,sem)>0;
+    await escribir(()=>marcar(id,sem,on?null:tarifa()));
+  }finally{busy.delete(id);}
+};
+acts.sem=t=>{
+  const v=t.dataset.v,act=semanaActual();
+  let n=v==='hoy'?act:addDays(S.semana,7*(+v));
+  if(n>act)n=act;
+  S.semana=n;draw();
+};
+acts.cuota=()=>abrir('<form class="dlg" data-kind="cuota" autocomplete="off"><div class="dh"><h2>Cuota por semana</h2><button type="button" class="btn icon" data-dact="cerrar" aria-label="Cerrar">×</button></div>'
+  +'<p class="sub">Es lo que se suma a la deuda cada vez que marcas que un jugador vino en una semana. Lo que ya se cobró no cambia.</p>'
+  +'<label class="fld"><span>Monto en pesos</span><input id="cMonto" type="number" inputmode="decimal" min="1" step="any" value="'+tarifa()+'"></label>'
+  +'<p class="err" id="dErr" role="alert" hidden></p><div class="dact"><button type="submit" class="btn pri">Guardar</button></div></form>');
+dacts.enviar_cuota=async()=>{
+  const v=parseFloat($('#cMonto').value);
+  if(!(v>0)){dError('Escribe un monto mayor a 0.');return;}
+  const ok=await escribir(()=>guardarCfg({tarifa:Math.round(v*100)/100}));
+  if(ok){cerrar();toast('Cuota guardada: '+money(v)+' por semana.');}
+};
+
+const filasPagos=()=>{
+  const cu=cuentas();
+  return D.jug.filter(j=>enCat(j)&&(j.activo!==false||cuentaDe(cu,j.id).saldo>0.004)).map(j=>{const c=cuentaDe(cu,j.id);return{j,c,s:c.saldo};});
+};
+function vPagos(){
+  const filas=filasPagos(),debe=filas.filter(x=>x.s>0),total=debe.reduce((a,x)=>a+x.s,0);
+  const h='<div class="bar"><div><h1>Pagos</h1><p class="sub">Deuda = cuotas de las semanas que vino + cargos − pagos. Tú registras los pagos.</p></div></div>';
+  if(!filas.length)return h+'<div class="empty"><h2>Todavía no hay jugadores</h2><p>Agrega jugadores para llevar la cuenta de lo que debe cada uno.</p><button class="btn pri" data-act="jugNuevo">Agregar jugador</button></div>';
+  return h+'<div class="score" role="group" aria-label="Resumen de pagos"><div><b class="bad">'+money(total)+'</b><span>Por cobrar</span></div><div><b>'+debe.length+'</b><span>Con adeudo</span></div><div><b class="ok">'+(filas.length-debe.length)+'</b><span>Al corriente</span></div></div>'
+    +'<div class="seg wide" role="group" aria-label="Qué jugadores ver"><button class="s" data-act="pfil" data-v="deben" aria-pressed="'+(S.filtro==='deben')+'">Con adeudo</button><button class="s" data-act="pfil" data-v="todos" aria-pressed="'+(S.filtro==='todos')+'">Todos</button></div>'
+    +buscador()+'<div id="lista">'+lPagos()+'</div>';
+}
+const filaPago=x=>{
+  const m=x.s>0?'<span class="amt bad"><b>'+money(x.s)+'</b><small>Debe</small></span>'
+    :x.s<0?'<span class="amt ok"><b>'+money(-x.s)+'</b><small>A favor</small></span>'
+    :'<span class="amt ok zero"><b>Al corriente</b></span>';
+  return'<button class="row" data-act="pagoAbrir" data-id="'+esc(x.j.id)+'">'+dorsalTile(x.j)
+    +'<span class="who"><span class="nm">'+esc(x.j.nombre)+'</span><span class="sub">Cobrado '+money(x.c.cobrado)+' · pagó '+money(x.c.pagado)+(x.j.activo===false?' · Baja':'')+'</span></span>'+m+'</button>';
+};
+function lPagos(){
+  const filas=filasPagos().filter(x=>coincide(x.j));
+  const ver=(S.filtro==='deben'?filas.filter(x=>x.s>0):filas).sort((a,b)=>cmpCat(a.j.categoria||'',b.j.categoria||'')||b.s-a.s||cmpJ(a.j,b.j));
+  if(!ver.length){
+    if(S.q.trim())return sinResultados();
+    return S.filtro==='deben'?aviso('Nadie debe nada','Todos los jugadores están al corriente.'):'';
+  }
+  return secciones(ver,x=>x.j.categoria,filaPago,arr=>{
+    const t=arr.reduce((a,x)=>a+Math.max(0,x.s),0);
+    return'<small class="'+(t>0?'bad':'')+'">'+(t>0?'Debe '+money(t)+' · ':'')+arr.length+(arr.length===1?' jugador':' jugadores')+'</small>';
+  });
+}
+function libro(id){
+  const e=[];
+  for(const [sem,m] of semanasDe(id))e.push({tipo:'cargo',monto:m,fecha:sem,nota:'',origen:'asistencia',semana:sem,ts:0});
+  for(const x of D.movs)if(x.jugadorId===id)e.push({tipo:x.tipo==='pago'?'pago':'cargo',monto:+x.monto||0,fecha:x.fecha||'',nota:x.nota||'',origen:'manual',mid:x.id,ts:x.ts||0,por:x.por||''});
+  return e.sort((a,b)=>(b.fecha||'').localeCompare(a.fecha||'')||(b.ts||0)-(a.ts||0));
+}
+const filaLibro=(e,id,quitar)=>{
+  const pago=e.tipo==='pago';
+  const txt=e.origen==='asistencia'?'Asistencia · '+semanaTxt(e.semana).replace(/^Del /,'semana del '):(e.fecha?fCorta(e.fecha):'')+(e.nota?' · '+e.nota:'');
+  return'<li><span class="mv-n">'+esc(txt)+'</span><b class="'+(pago?'pago':'cargo')+'">'+(pago?'−':'+')+money(e.monto)+'</b>'
+    +(quitar?'<button type="button" class="linkbtn" data-dact="mvQuitar" data-id="'+esc(id)+'" data-origen="'+e.origen+'" data-mid="'+esc(e.mid||'')+'" data-sem="'+esc(e.semana||'')+'">Quitar</button>':'')+'</li>';
+};
+function pagoDlg(id){
+  const j=D.jug.find(x=>x.id===id);if(!j)return;
+  const s=cuentaDe(cuentas(),id).saldo,mv=libro(id);
+  abrir('<form class="dlg" data-kind="mov" data-id="'+esc(id)+'" autocomplete="off">'
+    +'<div class="dh"><div><h2>'+esc(j.nombre)+'</h2><p class="sub">'+esc(catLabel(j.categoria))+'</p></div><button type="button" class="btn icon" data-dact="cerrar" aria-label="Cerrar">×</button></div>'
+    +'<div class="balance '+(s>0?'bad':'ok')+'"><span>'+(s>0?'Debe':s<0?'A favor':'Al corriente')+'</span><b>'+money(Math.abs(s))+'</b></div>'
+    +'<div class="grid2"><label class="fld"><span>Monto</span><input id="fMonto" type="number" inputmode="decimal" min="0" step="any" placeholder="0"></label>'
+    +'<label class="fld"><span>Fecha</span><input id="fFecha" type="date" value="'+hoy()+'"></label></div>'
+    +'<label class="fld"><span>Nota (opcional)</span><input id="fNota" type="text" maxlength="80" placeholder="Ej. uniforme, torneo, pago de la semana"></label>'
+    +'<p class="err" id="dErr" role="alert" hidden></p>'
+    +'<div class="dact"><button type="submit" class="btn pri">Registrar pago</button><button type="button" class="btn" data-dact="cargo">Agregar cargo</button>'
+    +(s>0?'<button type="button" class="btn ghost" data-dact="todo" data-v="'+s+'">Pagar todo ('+money(s)+')</button>':'')+'</div>'
+    +'<h3>Últimos movimientos</h3>'
+    +(mv.length?'<ul class="mvs">'+mv.slice(0,10).map(e=>filaLibro(e,id,true)).join('')+'</ul>':'<p class="sub">Todavía no hay movimientos.</p>')
+    +(mv.length>10?'<p class="sub">Se muestran los 10 más recientes. Todo el detalle está en Historial.</p>':'')
+    +'</form>');
+}
+async function registrarMov(tipo){
+  const f=$('#dlg form'),monto=parseFloat($('#fMonto').value);
+  if(!(monto>0)){dError('Escribe un monto mayor a 0.');return;}
+  if(tipo==='pago'){const s=cuentaDe(cuentas(),f.dataset.id).saldo;if(monto>s+0.004){dError(s>0?'Solo se puede pagar lo que debe: '+money(s)+'.':'Este jugador está al corriente, no debe nada.');return;}}
+  const d={jugadorId:f.dataset.id,tipo,monto:Math.round(monto*100)/100,fecha:$('#fFecha').value||hoy(),nota:$('#fNota').value.trim(),ts:Date.now(),por:S.user};
+  const j=D.jug.find(x=>x.id===d.jugadorId);
+  let ref=null;
+  const ok=await escribir(async()=>{ref=await S.db.collection('movimientos').add(d);});
+  if(!ok)return;
+  cerrar();
+  toast((tipo==='pago'?'Pago de ':'Cargo de ')+money(d.monto)+(j?' · '+j.nombre:''),()=>escribir(()=>ref.delete()));
+}
+dacts.enviar_mov=()=>registrarMov('pago');
+dacts.cargo=()=>registrarMov('cargo');
+dacts.todo=t=>{const i=$('#fMonto');i.value=t.dataset.v;i.focus();};
+
+dacts.mvQuitar=async t=>{
+  if(t.dataset.sure!=='1'){
+    t.dataset.sure='1';t.textContent='¿Seguro?';
+    setTimeout(()=>{t.dataset.sure='';t.textContent='Quitar';},3000);
+    return;
+  }
+  const id=t.dataset.id,sem=t.dataset.sem,mid=t.dataset.mid;
+  const ok=await escribir(()=>t.dataset.origen==='asistencia'?marcar(id,sem,null):S.db.doc('movimientos/'+mid).delete());
+  if(ok)pagoDlg(id);
+};
+acts.pagoAbrir=t=>pagoDlg(t.dataset.id);
+acts.pfil=t=>{S.filtro=t.dataset.v;draw();};
+
+function vHist(){
+  const h='<div class="bar"><div><h1>Historial</h1><p class="sub">Últimos movimientos: asistencias, cargos y pagos. Busca a un niño y toca un movimiento para ver su historial personal.</p></div></div>';
+  if(!D.jug.length)return h+'<div class="empty"><h2>Todavía no hay jugadores</h2><p>Cuando agregues jugadores, aquí verás sus movimientos.</p><button class="btn pri" data-act="jugNuevo">Agregar jugador</button></div>';
+  const t=hoy(),r=(l,d,x)=>'<button class="btn sm" data-act="hrango" data-d="'+d+'" data-h="'+x+'" aria-pressed="'+(S.hd===d&&S.hh===x)+'">'+l+'</button>';
+  return h+'<div class="acts">'+r('Todo','','')+r('Hoy',t,t)+r('Últimos 7 días',addDays(t,-6),t)+r('Este mes',t.slice(0,8)+'01',t)+'</div>'
+    +'<div class="grid2"><label class="fld"><span>Desde</span><input id="hDesde" type="date" value="'+esc(S.hd)+'"></label><label class="fld"><span>Hasta</span><input id="hHasta" type="date" value="'+esc(S.hh)+'"></label></div>'
+    +buscador()+'<div id="lista">'+lHist()+'</div>';
+}
+function lHist(){
+  const out=[];
+  for(const j of D.jug)if(enCat(j)&&coincide(j))for(const e of libro(j.id))out.push(Object.assign({j},e));
+  const ver=out.filter(e=>(!S.hd||e.fecha>=S.hd)&&(!S.hh||e.fecha<=S.hh)).sort((a,b)=>(b.fecha||'').localeCompare(a.fecha||'')||(b.ts||0)-(a.ts||0));
+  if(!ver.length)return S.q.trim()?sinResultados():aviso('Sin movimientos','No hay movimientos en estas fechas.');
+  const pg=ver.filter(e=>e.tipo==='pago').reduce((a,e)=>a+e.monto,0),cg=ver.filter(e=>e.tipo!=='pago').reduce((a,e)=>a+e.monto,0);
+  return'<div class="score"><div><b class="ok">'+money(pg)+'</b><span>Pagado</span></div><div><b>'+money(cg)+'</b><span>Cobrado</span></div><div><b>'+ver.length+'</b><span>Movimientos</span></div></div>'
+    +'<div class="list">'+ver.slice(0,200).map(e=>{
+      const pago=e.tipo==='pago',asis=e.origen==='asistencia',u=USERS.find(x=>x.id===e.por);
+      return'<button class="row" data-act="histAbrir" data-id="'+esc(e.j.id)+'">'+dorsalTile(e.j)+'<span class="who"><span class="nm">'+esc(e.j.nombre)+'</span><span class="sub">'+esc((e.fecha?fCorta(e.fecha):'')+' · '+(asis?'Asistencia de la semana':(pago?'Pago':'Cargo')+(e.nota?' · '+e.nota:''))+(u?' · '+u.n.split(' ')[0]:''))+'</span></span>'
+        +'<span class="amt '+(pago?'ok':'bad')+'"><b>'+(pago?'−':'+')+money(e.monto)+'</b><small>'+(pago?'Pago':asis?'Cuota':'Cargo')+'</small></span></button>';
+    }).join('')+'</div>'
+    +(ver.length>200?'<p class="sub">Se muestran los 200 más recientes; usa las fechas para acotar.</p>':'');
+}
+acts.hrango=t=>{S.hd=t.dataset.d;S.hh=t.dataset.h;draw();};
+function histDlg(id){
+  const j=D.jug.find(x=>x.id===id);if(!j)return;
+  const c=cuentaDe(cuentas(),id),s=c.saldo,act=semanaActual();
+  const movs=libro(id).filter(e=>e.origen==='manual');
+  const inicio=[j.alta?lunes(j.alta):'',...semanasDe(id).map(x=>x[0]),...movs.filter(e=>e.fecha).map(e=>lunes(e.fecha))].filter(Boolean).sort()[0]||act;
+  const sems=[];
+  for(let w=act;w>=inicio&&sems.length<52;w=addDays(w,-7))sems.push(w);
+  const cortado=sems.length&&addDays(sems[sems.length-1],-7)>=inicio;
+  const fila=w=>{
+    const m=montoSem(id,w);
+    return'<li><span class="mv-n">'+esc(semanaTxt(w))+'</span>'+(m>0?'<span class="chip ok">Vino · +'+money(m)+'</span>':'<span class="chip mute">'+(w===act?'Sin marcar':'No vino')+'</span>')+'</li>';
+  };
+  abrir('<div class="dlg">'
+    +'<div class="dh"><div><h2>'+esc(j.nombre)+'</h2><p class="sub">'+esc(catLabel(j.categoria))+(j.activo===false?' · Baja':'')+(j.tutor?' · '+esc(j.tutor):'')+'</p></div><button type="button" class="btn icon" data-dact="cerrar" aria-label="Cerrar">×</button></div>'
+    +'<div class="balance '+(s>0?'bad':'ok')+'"><span>'+(s>0?'Debe':s<0?'A favor':'Al corriente')+'</span><b>'+money(Math.abs(s))+'</b></div>'
+    +'<div class="tiles"><div class="tile"><b>'+c.asis+'</b><span>Asistencias</span></div><div class="tile"><b>'+money(c.cobrado)+'</b><span>Cobrado</span></div><div class="tile"><b>'+money(c.pagado)+'</b><span>Pagado</span></div></div>'
+    +'<div class="dact"><button type="button" class="btn pri" data-dact="irPagos" data-id="'+esc(id)+'">Registrar pago</button></div>'
+    +'<h3>Asistencias por semana</h3><ul class="wk">'+sems.map(fila).join('')+'</ul>'
+    +(cortado?'<p class="sub">Se muestran las últimas 52 semanas.</p>':'')
+    +'<h3>Pagos y cargos</h3>'
+    +(movs.length?'<ul class="mvs">'+movs.slice(0,30).map(e=>filaLibro(e,id,false)).join('')+'</ul>':'<p class="sub">Todavía no hay pagos ni cargos registrados.</p>')
+    +'</div>');
+}
+acts.histAbrir=t=>histDlg(t.dataset.id);
+dacts.irPagos=t=>pagoDlg(t.dataset.id);
+
+const cmpP=(a,b)=>(a.fecha+(a.hora||'')).localeCompare(b.fecha+(b.hora||''));
+function grupos(list){
+  const base=hoy();let h='';
+  for(const [c,arr] of porCat(list,p=>p.categoria)){
+    h+='<section class="cat" aria-label="'+esc(catLabel(c))+'"><h2 class="cat-h"><span>'+esc(catLabel(c))+'</span><small>'+arr.length+(arr.length===1?' juego':' juegos')+'</small></h2><div class="list">';
+    let last='';
+    for(const p of arr){
+      if(p.fecha!==last){
+        last=p.fecha;
+        h+='<h3 class="day'+(p.fecha===base?' hoy':'')+'">'+esc(fLarga(p.fecha))+(p.fecha===base?' · hoy':p.fecha===addDays(base,1)?' · mañana':'')+'</h3>';
+      }
+      h+='<button class="row" data-act="parEd" data-id="'+esc(p.id)+'"><span class="hora">'+(esc(horaTxt(p.hora))||'–')+'</span>'
+        +'<span class="who"><span class="nm">'+esc(p.rival?'vs '+p.rival:'Juego')+'</span><span class="sub">'+esc(p.sede||'Sede por confirmar')+'</span></span>'
+        +'<span></span></button>';
+    }
+    h+='</div></section>';
+  }
+  return h;
+}
+function vJuegos(){
+  const base=hoy(),todos=D.part.filter(enCat).sort(cmpP);
+  const prox=todos.filter(p=>p.fecha>=base),pas=todos.filter(p=>p.fecha<base).reverse();
+  const msg=buildRol({partidos:D.part,cat:S.cat,tipo:S.rango,base,club:CLUB,nota:D.cfg.notaRol||''});
+  let izq=prox.length?'<div class="list">'+grupos(prox)+'</div>':'<div class="empty"><h2>Sin juegos próximos</h2><p>Agrega el primer juego del rol.</p></div>';
+  if(pas.length){
+    izq+='<div class="acts"><button class="btn sm" data-act="pasados" aria-pressed="'+S.pasados+'">'+(S.pasados?'Ocultar':'Ver')+' anteriores ('+pas.length+')</button></div>';
+    if(S.pasados)izq+='<div class="list">'+grupos(pas)+'</div>';
+  }
+  const der='<section class="panel" aria-label="Mensaje para WhatsApp"><h2>Mensaje para el grupo</h2>'
+    +'<div class="seg wide" role="group" aria-label="Periodo del mensaje">'+[['semana','Próximos 7 días'],['finde','Fin de semana'],['todo','Todo']].map(r=>'<button class="s" data-act="rango" data-v="'+r[0]+'" aria-pressed="'+(S.rango===r[0])+'">'+r[1]+'</button>').join('')+'</div>'
+    +'<textarea class="msg" id="msg" readonly rows="10" aria-label="Mensaje listo para copiar" placeholder="No hay juegos en este periodo. Agrega juegos o cambia el periodo.">'+esc(msg)+'</textarea>'
+    +'<label class="fld"><span>Nota al final del mensaje (opcional)</span><textarea id="nota" rows="2" maxlength="300" placeholder="Ej. Llegar 30 minutos antes, con uniforme completo y botella de agua.">'+esc(D.cfg.notaRol||'')+'</textarea></label>'
+    +'<button class="btn pri" data-act="copiar"'+(msg?'':' disabled')+'>Copiar para WhatsApp</button></section>';
+  return'<div class="bar"><div><h1>Rol de juegos</h1><p class="sub">Captura el rol una vez y copia el mensaje, ya dividido por categoría, para el grupo de papás.</p></div><div class="acts"><button class="btn pri" data-act="parNuevo">Agregar juego</button></div></div>'
+    +'<div class="cols"><div class="list">'+izq+'</div>'+der+'</div>';
+}
+function parDlg(id){
+  const p=id?D.part.find(x=>x.id===id):null;
+  const v=p||{fecha:hoy(),hora:'10:00',categoria:S.cat||'',rival:'',sede:''};
+  abrir('<form class="dlg" data-kind="par" data-id="'+esc(id||'')+'" autocomplete="off">'
+    +'<div class="dh"><h2>'+(p?'Editar juego':'Nuevo juego')+'</h2><button type="button" class="btn icon" data-dact="cerrar" aria-label="Cerrar">×</button></div>'
+    +'<div class="grid2"><label class="fld"><span>Fecha</span><input id="pFecha" type="date" value="'+esc(v.fecha)+'" required></label>'
+    +'<label class="fld"><span>Hora</span><input id="pHora" type="time" value="'+esc(v.hora||'')+'"></label></div>'
+    +'<div class="grid2"><label class="fld"><span>Categoría (año)</span><input id="pCat" type="text" inputmode="numeric" list="catList" value="'+esc(v.categoria)+'" placeholder="2013" maxlength="12"></label>'
+    +'<label class="fld"><span>Contra</span><input id="pRival" type="text" value="'+esc(v.rival)+'" placeholder="Nombre del rival" maxlength="60"></label></div>'
+    +'<label class="fld"><span>Sede</span><input id="pSede" type="text" value="'+esc(v.sede)+'" placeholder="Cancha o dirección" maxlength="100"></label>'
+    +catOptions()+'<p class="err" id="dErr" role="alert" hidden></p>'
+    +'<div class="dact"><button type="submit" class="btn pri">Guardar</button>'+(p?'<button type="button" class="btn danger" data-dact="parBorrar" data-id="'+esc(p.id)+'">Borrar juego</button>':'')+'</div></form>');
+}
+dacts.enviar_par=async f=>{
+  const d={fecha:$('#pFecha').value,hora:$('#pHora').value,categoria:$('#pCat').value.trim(),rival:$('#pRival').value.trim(),sede:$('#pSede').value.trim()};
+  if(!d.fecha){dError('Elige la fecha del juego.');return;}
+  const id=f.dataset.id;
+  const ok=await escribir(async()=>{if(id)await S.db.doc('partidos/'+id).update(d);else await S.db.collection('partidos').add(d);});
+  if(ok){cerrar();toast('Juego guardado.');}
+};
+dacts.parBorrar=async t=>{
+  if(t.dataset.sure!=='1'){
+    t.dataset.sure='1';t.textContent='¿Seguro? Toca otra vez';
+    setTimeout(()=>{t.dataset.sure='';t.textContent='Borrar juego';},3000);
+    return;
+  }
+  const ok=await escribir(()=>S.db.doc('partidos/'+t.dataset.id).delete());
+  if(ok){cerrar();toast('Juego borrado.');}
+};
+acts.parNuevo=()=>parDlg('');
+acts.parEd=t=>parDlg(t.dataset.id);
+acts.rango=t=>{S.rango=t.dataset.v;draw();};
+acts.pasados=()=>{S.pasados=!S.pasados;draw();};
+acts.notaGuardar=t=>{const v=t.value.trim();if(v===(D.cfg.notaRol||''))return;escribir(()=>guardarCfg({notaRol:v}));};
+acts.copiar=async()=>{
+  const ta=$('#msg');if(!ta||!ta.value)return;
+  const bien=()=>toast('Mensaje copiado. Pégalo en el grupo de WhatsApp.');
+  try{await navigator.clipboard.writeText(ta.value);bien();}
+  catch(e){
+    ta.focus();ta.select();
+    try{if(document.execCommand('copy')){bien();return;}}catch(_){}
+    toast('Selecciona el texto y cópialo manualmente.');
+  }
+};
+
+function vJug(){
+  const todos=D.jug.filter(enCat);
+  const act=todos.filter(j=>j.activo!==false),baj=todos.filter(j=>j.activo===false);
+  let h='<div class="bar"><div><h1>Jugadores</h1><p class="sub">'+plural(act.length,'jugador activo','jugadores activos')+(S.cat?' en la categoría '+esc(S.cat):'')+'</p></div>'
+    +'<div class="acts"><button class="btn pri" data-act="jugNuevo">Agregar jugador</button><button class="btn" data-act="jugVarios">Agregar varios</button></div></div>';
+  if(baj.length)h+='<div class="acts"><button class="btn sm" data-act="bajas" aria-pressed="'+S.bajas+'">'+(S.bajas?'Ocultar':'Mostrar')+' bajas ('+baj.length+')</button></div>';
+  if(!todos.length)return h+'<div class="empty"><h2>Todavía no hay jugadores</h2><p>Agrega uno por uno, o pega una lista de nombres con “Agregar varios”.</p></div>';
+  return h+buscador()+'<div id="lista">'+lJug()+'</div>';
+}
+function lJug(){
+  const items=D.jug.filter(j=>enCat(j)&&(S.bajas||j.activo!==false)&&coincide(j)).sort(cmpJ);
+  if(!items.length)return S.q.trim()?sinResultados():aviso('No hay jugadores activos','Toca “Mostrar bajas” para ver a los que se dieron de baja.');
+  return secciones(items,j=>j.categoria,j=>'<button class="row" data-act="jugEd" data-id="'+esc(j.id)+'">'+dorsalTile(j)
+    +'<span class="who"><span class="nm">'+esc(j.nombre)+'</span><span class="sub">'+esc([j.tutor,j.telefono].filter(Boolean).join(' · ')||'Sin datos de contacto')+'</span></span>'
+    +(j.activo===false?'<span class="chip mute">Baja</span>':'<span></span>')+'</button>');
+}
+function jugDlg(id){
+  const j=id?D.jug.find(x=>x.id===id):null;
+  const v=j||{nombre:'',categoria:S.cat||'',dorsal:'',tutor:'',telefono:''};
+  abrir('<form class="dlg" data-kind="jug" data-id="'+esc(id||'')+'" autocomplete="off">'
+    +'<div class="dh"><h2>'+(j?'Editar jugador':'Nuevo jugador')+'</h2><button type="button" class="btn icon" data-dact="cerrar" aria-label="Cerrar">×</button></div>'
+    +'<label class="fld"><span>Nombre completo</span><input id="jNombre" type="text" value="'+esc(v.nombre)+'" maxlength="80" required></label>'
+    +'<div class="grid2"><label class="fld"><span>Categoría (año de nacimiento)</span><input id="jCat" type="text" inputmode="numeric" list="catList" value="'+esc(v.categoria)+'" placeholder="2013" maxlength="12"></label>'
+    +'</div>'
+    +'<div class="grid2"><label class="fld"><span>Papá o mamá</span><input id="jTutor" type="text" value="'+esc(v.tutor||'')+'" maxlength="80"></label>'
+    +'<label class="fld"><span>Teléfono</span><input id="jTel" type="tel" inputmode="tel" value="'+esc(v.telefono||'')+'" maxlength="20"></label></div>'
+    +(j?'':'<label class="fld"><span>¿Debe algo desde antes? (opcional)</span><input id="jDebe" type="number" inputmode="decimal" min="0" step="any" placeholder="0"></label>')
+    +catOptions()+'<p class="err" id="dErr" role="alert" hidden></p>'
+    +'<div class="dact"><button type="submit" class="btn pri">Guardar</button>'+(j?'<button type="button" class="btn" data-dact="jugBaja" data-id="'+esc(j.id)+'">'+(j.activo===false?'Reactivar':'Dar de baja')+'</button>':'')+'</div></form>');
+}
+dacts.enviar_jug=async f=>{
+  const nombre=$('#jNombre').value.trim();
+  if(!nombre){dError('Escribe el nombre del jugador.');return;}
+  const d={nombre,categoria:$('#jCat').value.trim(),tutor:$('#jTutor').value.trim(),telefono:$('#jTel').value.trim()};
+  const id=f.dataset.id,debe=$('#jDebe')?parseFloat($('#jDebe').value):0;
+  const ok=await escribir(async()=>{
+    if(id)await S.db.doc('jugadores/'+id).update(d);
+    else{
+      const ref=await S.db.collection('jugadores').add(Object.assign({activo:true,alta:hoy()},d));
+      if(debe>0)await S.db.collection('movimientos').add({jugadorId:ref.id,tipo:'cargo',monto:Math.round(debe*100)/100,fecha:hoy(),nota:'Saldo inicial',ts:Date.now()});
+    }
+  });
+  if(ok){cerrar();toast(id?'Cambios guardados.':'Jugador agregado.');}
+};
+dacts.jugBaja=async t=>{
+  const j=D.jug.find(x=>x.id===t.dataset.id);if(!j)return;
+  const reactivar=j.activo===false;
+  const ok=await escribir(()=>S.db.doc('jugadores/'+j.id).update({activo:reactivar}));
+  if(ok){cerrar();toast(reactivar?'Jugador reactivado.':'Jugador dado de baja.');}
+};
+function variosDlg(){
+  abrir('<form class="dlg" data-kind="var" autocomplete="off"><div class="dh"><h2>Agregar varios</h2><button type="button" class="btn icon" data-dact="cerrar" aria-label="Cerrar">×</button></div>'
+    +'<p class="sub">Pega una lista con un nombre por línea. Después puedes ajustar datos de cada jugador.</p>'
+    +'<label class="fld"><span>Categoría (año de nacimiento)</span><input id="vCat" type="text" inputmode="numeric" list="catList" value="'+esc(S.cat)+'" placeholder="2013" maxlength="12"></label>'
+    +'<label class="fld"><span>Nombres</span><textarea id="vNombres" rows="8" placeholder="Un nombre por línea"></textarea></label>'
+    +catOptions()+'<p class="err" id="dErr" role="alert" hidden></p><div class="dact"><button type="submit" id="btnVarSubmit" class="btn pri">Agregar jugadores</button></div></form>');
+}
+dacts.enviar_var=async()=>{
+  const rawText=$('#vNombres').value;
+  const nombres=rawText.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+  if(!nombres.length){dError('Escribe al menos un nombre.');return;}
+  const cat=$('#vCat').value.trim();
+  const submitBtn=$('#btnVarSubmit');
+  if(submitBtn){submitBtn.disabled=true;submitBtn.textContent='Guardando…';}
+
+  const ok=await escribir(async()=>{
+    let batch=S.db.batch();
+    let count=0;
+    for(const n of nombres){
+      const docRef=S.db.collection('jugadores').doc();
+      batch.set(docRef,{
+        nombre:n.slice(0,80),
+        categoria:cat,
+        dorsal:null,
+        tutor:'',
+        telefono:'',
+        activo:true,
+        alta:hoy()
+      });
+      count++;
+      if(count%400===0){
+        await batch.commit();
+        batch=S.db.batch();
+      }
+    }
+    if(count%400!==0){
+      await batch.commit();
+    }
+  });
+
+  if(ok){cerrar();toast('Agregaste '+plural(nombres.length,'jugador.','jugadores.'));}
+  else if(submitBtn){submitBtn.disabled=false;submitBtn.textContent='Agregar jugadores';}
+};
+acts.jugNuevo=()=>jugDlg('');
+acts.jugEd=t=>jugDlg(t.dataset.id);
+acts.jugVarios=()=>variosDlg();
+acts.bajas=()=>{S.bajas=!S.bajas;draw();};
+
+acts.ejBorrar=async()=>{
+  if(S.confirm!=='ej'){
+    S.confirm='ej';draw();
+    setTimeout(()=>{if(S.confirm==='ej'){S.confirm='';draw();}},4000);
+    return;
+  }
+  S.confirm='';
+  const ok=await escribir(async()=>{
+    const de=(col,list)=>list.filter(x=>x.ejemplo).map(x=>S.db.doc(col+'/'+x.id));
+    const as=[];D.asis.forEach((d,id)=>{if(d&&d.ejemplo)as.push(S.db.doc('asistencia/'+id));});
+    const refs=[].concat(de('movimientos',D.movs),de('partidos',D.part),de('jugadores',D.jug),as);
+    for(const r of refs)await r.delete();
+  });
+  draw();
+  if(ok)toast('Ejemplos borrados. Ya puedes empezar con tus jugadores.');
+};
+
+const loginHtml=()=>'<form class="dlg panel" id="lg" data-kind="login" autocomplete="off" style="max-width:420px;margin:24px auto"><h2>Entrar</h2>'
+  +'<label class="fld"><span>Correo electrónico</span><input id="lU" type="email" autocomplete="email" required placeholder="correo@ejemplo.com"></label>'
+  +'<label class="fld"><span>Contraseña</span><input id="lP" type="password" autocomplete="current-password" required></label>'
+  +'<p class="err" id="lE" role="alert" hidden></p><button type="submit" class="btn pri">Entrar</button></form>';
+
+dacts.enviar_login=async()=>{
+  const email=$('#lU').value.trim().toLowerCase();
+  const pass=$('#lP').value;
+  const p=$('#lE');
+  const match=USERS.find(u=>u.email.toLowerCase()===email&&u.pass===pass);
+  if(!match){
+    p.textContent='Correo o contraseña incorrectos.';
+    p.hidden=false;
+    return;
+  }
+  S.user=match.id;
+  guardarPref();
+  p.hidden=true;
+  iniciarSesionApp();
+};
+
+acts.salir=()=>{
+  S.user='';
+  guardarPref();
+  draw();
+};
+
+function iniciarSesionApp(){
+  S.conn='listo';
+  S.canWrite=true;
+  if(S.ready.size===0){
+    suscribir();
+  }
+  draw();
+}
+
+(function boot(){
+  S.db=firestoreDb;
+  S.conn='listo';
+  if(S.user){
+    iniciarSesionApp();
+  }else{
+    draw();
+  }
+})();
+
+</script>
+
+</body></html>
